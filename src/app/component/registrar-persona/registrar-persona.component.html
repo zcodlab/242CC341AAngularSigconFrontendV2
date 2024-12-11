@@ -1,0 +1,255 @@
+<div class="container">
+  <div class="row">
+    <!--Persona-Cabecera-->
+    <h1>{{ title }}</h1>
+    <div class="card">
+      <div class="card-body"></div>
+      <form class="form-group g-4 needs-validation" [formGroup]="personaForm">
+        <div class="row mb-2">
+          <label for="inputAPaterno" class="col-sm-2 col-form-label"
+            >Apellido Paterno:</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="text"
+              class="form-control"
+              id="inputAPaterno"
+              placeholder="Consigne Apellido Paterno"
+              formControlName="apellidoPaterno"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <label for="inputAMaterno" class="col-sm-2 col-form-label"
+            >Apellido Materno:</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="text"
+              class="form-control"
+              id="inputAMaterno"
+              placeholder="Consigne Apellido Materno"
+              formControlName="apellidoMaterno"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <label for="inputNombres" class="col-sm-2 col-form-label"
+            >Nombres:</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="text"
+              class="form-control"
+              id="inputNombres"
+              placeholder="Consigne Nombres"
+              formControlName="nombres"
+            />
+          </div>
+        </div>
+        <div class="row mb-2">
+          <label for="inputFNac" class="col-sm-2 col-form-label"
+            >Fecha Nacimiento:</label
+          >
+          <div class="col-sm-2">
+            <input
+              type="date"
+              class="form-control"
+              id="inputFNac"
+              placeholder="Consigne Fecha dd/mm/yyyy"
+              formControlName="fechaNacimiento"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <label for="inputTipoDoc" class="col-sm-2 col-form-label"
+            >Tipo Documento:</label
+          >
+          <div class="col-sm-2">
+            <select
+              class="form-control form-select"
+              id="inputIdTipoDocumento"
+              formControlName="idTipoDocumento"
+              (change)="setTipoDocumento($event)"
+            >
+              <option
+                *ngFor="let tipodoc of tipoDocumentoArray"
+                value="{{ tipodoc.idTipoDocumento }}"
+              >
+                {{ tipodoc.descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <label for="inputNDoc" class="col-sm-2 col-form-label"
+            >N° Documento:</label
+          >
+          <div class="col-sm-2">
+            <input
+              type="text"
+              class="form-control"
+              id="inputNDoc"
+              placeholder="Consigne N° Documento"
+              formControlName="ndocumento"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <label for="inputDireccion" class="col-sm-2 col-form-label"
+            >Direccion:</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="text"
+              class="form-control"
+              id="inputDireccion"
+              placeholder="Consigne Direccion"
+              formControlName="direccion"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <label for="inputUbigeo" class="col-sm-2 col-form-label"
+            >Ubigeo:</label
+          >
+          <div class="col-sm-4">
+            <select
+              class="form-control form-select"
+              id="inputUbigeo"
+              formControlName="idUbigeo"
+              (change)="setUbigeo($event)"
+            >
+              <option
+                *ngFor="let ubigeo of ubigeoArray"
+                value="{{ ubigeo.idUbigeo }}"
+              >
+                {{
+                  ubigeo.departamento +
+                    "|" +
+                    ubigeo.provincia +
+                    "|" +
+                    ubigeo.distrito
+                }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row m-2 col-sm-1">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            (click)="registrarPersona()"
+          >
+            Registrar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <!--Persona-Detalle-->
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">APaterno</th>
+                <th scope="col">AMaterno</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">FNac</th>
+                <th scope="col">TipoDoc</th>
+                <th scope="col">NDoc</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Ubigeo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let persona of personaArray
+                    | paginate : { itemsPerPage: 10, currentPage: page };
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>{{ persona.apellidoPaterno }}</td>
+                <td>{{ persona.apellidoMaterno }}</td>
+                <td>{{ persona.nombres }}</td>
+                <td>{{ persona.fechaNacimiento }}</td>
+                <td *ngIf="persona.tipoDocumento">
+                  {{ persona.tipoDocumento.descripcion }}
+                </td>
+                <td *ngIf="!persona.tipoDocumento">Ninguno</td>
+                <td>{{ persona.ndocumento }}</td>
+                <td>{{ persona.direccion }}</td>
+                <td *ngIf="persona.ubigeo">
+                  {{
+                    persona.ubigeo.departamento +
+                      "|" +
+                      persona.ubigeo.provincia +
+                      "|" +
+                      persona.ubigeo.distrito
+                  }}
+                </td>
+                <td *ngIf="!persona.ubigeo">Ninguno</td>
+                <td>
+                  <button
+                    class="btn btn-secondary rounded-circle p-2 lh-1"
+                    (click)="editarPersona(persona)"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="fa-regular fa-pen-to-square"
+                      viewBox="0 0 512 512"
+                    >
+                      <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                      <path
+                        d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152L0 424c0 48.6 39.4 88 88 88l272 0c48.6 0 88-39.4 88-88l0-112c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 112c0 22.1-17.9 40-40 40L88 464c-22.1 0-40-17.9-40-40l0-272c0-22.1 17.9-40 40-40l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 64z"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    class="btn btn-secondary rounded-circle p-2 lh-1"
+                    (click)="eliminarPersona(persona)"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="fa-solid fa-trash-can"
+                      viewBox="0 0 448 512"
+                    >
+                      <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                      <path
+                        d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"
+                      />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls
+            (pageChange)="page = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+          >
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

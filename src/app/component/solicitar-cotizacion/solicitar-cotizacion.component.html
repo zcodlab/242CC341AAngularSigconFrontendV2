@@ -1,0 +1,290 @@
+<div class="container">
+  <h1 class="mt-3 mb-3">Solicitud de Cotizacion {{ nSolicitud }}</h1>
+  <div class="row">
+    <div class="card">
+      <div class="card-header custom-style">Información de la Solicitud</div>
+      <div class="card-body">
+        <form
+          class="form-group g-4 needs-validation"
+          [formGroup]="solicitudForm"
+        >
+          <div class="row mb-3">
+            <div class="col-2 form-group">
+              <label for="inputfechaSolicitud">Fecha Solicitud:</label>
+            </div>
+            <div class="col-sm-2">
+              <input
+                type="date"
+                class="form-control"
+                id="fechaSolicitud"
+                formControlName="fechaSolicitud"
+              />
+            </div>
+            <div class="col-1"></div>
+            <div class="col-1 form-group">
+              <label for="idServicio">Servicio:</label>
+            </div>
+            <div class="col-sm-2">
+              <select
+                class="form-control form-select"
+                id="inputIdServicio"
+                formControlName="idServicio"
+                (change)="seleccionarServicio($event)"
+              >
+                <option
+                  *ngFor="let s of servicioArray"
+                  value="{{ s.idServicio }}"
+                >
+                  {{ s.descripcion }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <h4>Datos del Solicitante:</h4>
+            <div class="row mt-3 mb-3">
+              <label for="nDocumento" class="col-sm-2 col-form-label"
+                >N° Documento:</label
+              >
+              <div class="col-sm-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Consigne N° de documento de identidad"
+                  formControlName="nDocumento"
+                />
+              </div>
+              <div class="col-sm-2">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="buscarDNI()"
+                >
+                  Buscar
+                </button>
+              </div>
+              <div class="row mt-3 mb-1">
+                <div class="col-1 form-group">
+                  <label for="apellidoPaterno">Apellido Paterno:</label>
+                </div>
+                <div class="col-2">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apellidoPaterno"
+                    formControlName="apellidoPaterno"
+                    required
+                  />
+                </div>
+
+                <div class="col-1 form-group">
+                  <label for="apellidoMaterno">Apellido Materno:</label>
+                </div>
+                <div class="col-2">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apellidoMaterno"
+                    formControlName="apellidoMaterno"
+                    required
+                  />
+                </div>
+
+                <div class="col-1 form-group">
+                  <label for="nombres">Nombres:</label>
+                </div>
+                <div class="col-2">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nombres"
+                    formControlName="nombres"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-1 form-group">
+                <label for="telefono">Telefono:</label>
+              </div>
+              <div class="col-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="telefono"
+                  formControlName="telefono"
+                  required
+                />
+              </div>
+              <div class="col-1 form-group">
+                <label for="correo">Correo:</label>
+              </div>
+              <div class="col-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="correo"
+                  formControlName="correo"
+                  required
+                />
+              </div>
+            </div>
+            <hr width="50%" />
+          </div>
+          <div class="row mb-3">
+            <h4>Datos del Predio:</h4>
+            <div class="col-2 form-group">
+              <label for="idPredio">Predio:</label>
+            </div>
+            <div class="col-sm-2">
+              <select
+                class="form-control form-select"
+                id="inputIdPredio"
+                formControlName="idPredio"
+                (change)="seleccionarPredio($event)"
+              >
+                <option *ngFor="let p of predioArray" value="{{ p.idPredio }}">
+                  {{ p.descripcion }}
+                </option>
+              </select>
+            </div>
+            <div class="col-1"></div>
+          </div>
+          <div class="row mt-4 mb-3">
+            <hr width="50%" />
+            <h4>Caracteristicas del Predio:</h4>
+            <div class="col-1 form-group">
+              <label for="areaPredio">Área predio (en m²):</label>
+            </div>
+            <div class="col-1">
+              <input
+                type="text"
+                class="form-control"
+                id="areaPredio"
+                formControlName="areaPredio"
+                required
+              />
+            </div>
+            <div class="col-1"></div>
+            <div class="col-1 form-group">
+              <label for="numCasas">N° Casas-Habitación:</label>
+            </div>
+            <div class="col-1">
+              <input
+                type="number"
+                class="form-control"
+                id="numCasas"
+                min="0"
+                value="0"
+                formControlName="numCasas"
+                required
+              />
+            </div>
+            <div class="col-1"></div>
+            <div class="col-1 form-group">
+              <label for="cantAcomunes">N° Areas Comunes:</label>
+            </div>
+            <div class="col-1">
+              <input
+                type="number"
+                class="form-control"
+                id="cantAcomunes"
+                min="0"
+                value="0"
+                formControlName="cantAcomunes"
+                required
+              />
+            </div>
+            <div class="col-1"></div>
+            <div class="col-1 form-group">
+              <label for="areaAcomunes">Área Areas comunes (en m²):</label>
+            </div>
+            <div class="col-1">
+              <input
+                type="text"
+                class="form-control"
+                id="areaAcomunes"
+                formControlName="areaAcomunes"
+                required
+              />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2 form-group">
+              <label for="cantAdministracion">N° Administrador:</label>
+            </div>
+            <div class="col-1">
+              <input
+                type="number"
+                class="form-control"
+                id="cantAdministracion"
+                min="0"
+                value="0"
+                formControlName="cantAdministracion"
+                required
+              />
+            </div>
+            <div class="col-2 form-group">
+              <label for="cantVigilantes">N° de Vigilantes:</label>
+            </div>
+            <div class="col-1">
+              <input
+                type="number"
+                class="form-control"
+                id="cantVigilantes"
+                min="0"
+                value="0"
+                formControlName="cantVigilantes"
+                required
+              />
+            </div>
+            <div class="col-2 form-group">
+              <label for="cantPlimpieza">N° Personal limpieza:</label>
+            </div>
+            <div class="col-1">
+              <input
+                type="number"
+                class="form-control"
+                id="cantPlimpieza"
+                min="0"
+                value="0"
+                formControlName="cantPlimpieza"
+                required
+              />
+            </div>
+
+            <div class="col-2 form-group">
+              <label for="cantJardineria">N° Jardineros:</label>
+            </div>
+            <div class="col-1">
+              <input
+                type="number"
+                class="form-control"
+                id="cantJardineria"
+                min="0"
+                value="0"
+                formControlName="cantJardineria"
+                required
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="form-group p-2">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!solicitudForm.valid"
+        (click)="registrarSolicitud()"
+      >
+        Registrar
+      </button>
+      <button class="btn btn-danger" (click)="cancelarRegistro()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
