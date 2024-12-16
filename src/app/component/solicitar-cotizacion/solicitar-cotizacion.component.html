@@ -133,6 +133,29 @@
             </div>
             <hr width="50%" />
           </div>
+
+          <div class="row mt-3 mb-3">
+            <label for="nRuc" class="col-sm-2 col-form-label">
+              N° Ruc:
+            </label>
+            <div class="col-sm-2">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Consigne N° de Ruc"
+                formControlName="nRuc"
+              />
+            </div>
+            <div class="col-sm-2">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="buscarRuc()"
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
           <div class="row mb-3">
             <h4>Datos del Predio:</h4>
             <div class="col-2 form-group">
@@ -152,6 +175,90 @@
             </div>
             <div class="col-1"></div>
           </div>
+          <div class="row mb-3">
+            <div class="col-1 form-group">
+              <label for="typeDescriptionPredio">Descripción de tipo:</label>
+            </div>
+            <div class="col-2">
+              <input
+                type="text"
+                class="form-control"
+                id="typeDescriptionPredio"
+                formControlName="typeDescriptionPredio"
+              />
+            </div>
+            <div class="col-1 form-group">
+              <label for="descriptionPredio">Descripción:</label>
+            </div>
+            <div class="col-2">
+              <input
+                type="text"
+                class="form-control"
+                id="descriptionPredio"
+                formControlName="descriptionPredio"
+              />
+            </div>
+            <div class="col-1 form-group">
+              <label for="addressPredio">Dirección:</label>
+            </div>
+            <div class="col-2">
+              <input
+                type="text"
+                class="form-control"
+                id="addressPredio"
+                formControlName="addressPredio"
+              />
+            </div>
+
+            <div class="col-1 form-group">
+              <label for="ubigeoPredio">Ubigeo:</label>
+            </div>
+            <div class="col-2">
+              <input
+                type="text"
+                class="form-control"
+                id="ubigeoPredio"
+                formControlName="ubigeoPredio"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-1 form-group">
+              <label for="rucPredio">RUC:</label>
+            </div>
+            <div class="col-2">
+              <input
+                type="text"
+                class="form-control"
+                id="rucPredio"
+                formControlName="rucPredio"
+              />
+            </div>
+            <div class="col-1 form-group">
+              <label for="phonePredio">Telefono:</label>
+            </div>
+            <div class="col-2">
+              <input
+                type="text"
+                class="form-control"
+                id="phonePredio"
+                formControlName="phonePredio"
+              />
+            </div>
+            <div class="col-1 form-group">
+              <label for="emailPredio">Email:</label>
+            </div>
+            <div class="col-2">
+              <input
+                type="text"
+                class="form-control"
+                id="emailPredio"
+                formControlName="emailPredio"
+              />
+            </div>
+          </div>
+
           <div class="row mt-4 mb-3">
             <hr width="50%" />
             <h4>Caracteristicas del Predio:</h4>

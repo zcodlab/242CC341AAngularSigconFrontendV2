@@ -12,4 +12,8 @@ export class PredioService {
   getPredio(): Observable<IPredioResponse[]> {
     return this.http.get<IPredioResponse[]>(`${BASE_URL}/predio`);
   }
+
+  getPredioByRuc(ruc: String): Observable<IPredioResponse> {
+    return this.http.get<IPredioResponse>(`${BASE_URL}/predio/${ruc}`);
+  }
 }

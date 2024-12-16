@@ -49,6 +49,7 @@ export class SolicitarCotizacionComponent {
       idPredio: new FormControl('', [Validators.required]),
       idSolicitante: new FormControl('', [Validators.required]),
       nDocumento: new FormControl('', []),
+      nRuc: new FormControl('',[]),
       idServicio: new FormControl('1'),
       areaPredio: new FormControl('', [Validators.required]),
       numCasas: new FormControl('', [Validators.required]),
@@ -64,6 +65,13 @@ export class SolicitarCotizacionComponent {
       nombres: new FormControl('', []),
       telefono: new FormControl('', []),
       correo: new FormControl('', []),
+      typeDescriptionPredio: new FormControl('',[]),
+      descriptionPredio: new FormControl('', []),
+      addressPredio: new FormControl('', []),
+      rucPredio: new FormControl('', []),
+      phonePredio: new FormControl('',[]),
+      emailPredio: new FormControl('', []),
+      ubigeoPredio: new FormControl('', []),
     });
   }
 
@@ -78,6 +86,14 @@ export class SolicitarCotizacionComponent {
     this.solicitudForm.get('nombres')?.disable();
     this.solicitudForm.get('telefono')?.disable();
     this.solicitudForm.get('correo')?.disable();
+    this.solicitudForm.get('typeDescriptionPredio')?.disable();
+    this.solicitudForm.get('descriptionPredio')?.disable();
+    this.solicitudForm.get('addressPredio')?.disable();
+    this.solicitudForm.get('ubigeoPredio')?.disable();
+    this.solicitudForm.get('emailPredio')?.disable();
+    this.solicitudForm.get('phonePredio')?.disable();
+    this.solicitudForm.get('rucPredio')?.disable();
+    this.solicitudForm.get('idPredio')?.disable();
   }
 
   setSolicitudRequest(): void {
@@ -225,6 +241,47 @@ export class SolicitarCotizacionComponent {
       title: 'cancelarRegistro....',
       text: '!Falta implementacion!',
     });
+  }
+
+  buscarRuc(): void {
+    const nRuc = this.solicitudForm.get('nRuc')?.value;
+    console.log("nRuc:", nRuc);
+    this.predioService.getPredioByRuc(nRuc).subscribe(
+      (result: any) => {
+        console.log(result);
+        this.solicitudForm.controls['typeDescriptionPredio'].setValue(
+          result.tipoPredio.descripcion
+        );
+        this.solicitudForm.controls['descriptionPredio'].setValue(
+          result.descripcion
+        );
+        this.solicitudForm.controls['addressPredio'].setValue(
+          result.direccion
+        );
+        this.solicitudForm.controls['ubigeoPredio'].setValue(
+          result.ubigeo.idUbigeo
+        );
+        this.solicitudForm.controls['rucPredio'].setValue(
+          result.ruc
+        );
+        this.solicitudForm.controls['phonePredio'].setValue(
+          result.telefono
+        );
+        this.solicitudForm.controls['emailPredio'].setValue(
+          result.correo
+        );
+        this.solicitudForm.controls['idPredio'].setValue(result.idPredio);
+        
+      },
+      (err: any) => {
+        Swal.close();
+        Swal.fire({
+          icon: 'error',
+          title: 'buscar Predio....',
+          text: '!Ah ocurrido un error al recuperar el predio!',
+        });
+      }
+    )
   }
 
   buscarDNI(): void {
